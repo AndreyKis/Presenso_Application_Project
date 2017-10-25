@@ -4,22 +4,18 @@ import com.kisilevskiy.core.base.MatrixMultiplier;
 import com.kisilevskiy.core.domain.Matrix;
 
 import static com.kisilevskiy.config.ApplicationConstants.ExceptionMessages.WRONG_MATRICES_SIZES;
-import static com.kisilevskiy.config.ApplicationConstants.LoggerTexts.LINEAR_ELAPSED_TIME;
 
 public class MatrixLinearMultiplier implements MatrixMultiplier {
 
     @Override
     public Matrix multiplyMatrices(Matrix firstMatrix, Matrix secondMatrix) throws IllegalArgumentException {
-
-        int firstMatrixColumnLength = firstMatrix.getColumnByIndex(0).length;
+        int firstMatrixColumnLength = firstMatrix.getColumnLength(0);
         int secondMatrixRowLength = secondMatrix.getRowLength();
 
         // We are not resizing matrices in linear implementation
         if(firstMatrixColumnLength != secondMatrixRowLength) {
             throw new IllegalArgumentException(WRONG_MATRICES_SIZES);
         }
-
-        long linearBeginTime = System.nanoTime();
 
         int maxRowLength = Math.max(firstMatrix.getRowLength(), secondMatrix.getRowLength());
         int maxColumnLength = Math.max(firstMatrix.getMaxColumn(), secondMatrix.getMaxColumn());
@@ -34,13 +30,7 @@ public class MatrixLinearMultiplier implements MatrixMultiplier {
             }
         }
 
-        long linearEndTime = System.nanoTime();
-
-        System.out.println(LINEAR_ELAPSED_TIME + (linearEndTime - linearBeginTime) / 1000000000.0);
-        System.out.println();
-
         return new Matrix(result);
-
     }
 
 }

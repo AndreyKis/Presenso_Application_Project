@@ -40,7 +40,7 @@ public class Matrix {
      *
      * @param rowNumber    index of row
      * @param columnNumber index of column
-     * @return
+     * @return Integer element defined by indices
      */
     public int getElement(int rowNumber, int columnNumber) {
         return this.array[rowNumber][columnNumber];
@@ -54,11 +54,23 @@ public class Matrix {
         return array[i].length;
     }
 
-    // TODO REMOVE
-    public int[] getColumnByIndex(int i) {
-        return array[i];
+    /**
+     * Fills matrix with elements retrieved from column, defined by index
+     * @param index Parameter which defines column number in multidimensional array
+     * @param srcPos Position to start from in column
+     * @param destination Array to fill from column
+     * @param destPos Position in destination array to fill from
+     * @param length Amount of elements to copy
+     */
+    public void fillMatrixFromColumnByIndex(int index, int srcPos, int[] destination, int destPos, int length) {
+        System.arraycopy(this.array[index], srcPos, destination, destPos, length);
+
     }
 
+    /**
+     * Method to return row length
+     * @return integer length of row
+     */
     public int getRowLength() {
         return array.length;
     }
@@ -99,6 +111,11 @@ public class Matrix {
 
     }
 
+    /**
+     * Multiplies two matrices
+     * @param factorMatrix Matrix to use in multiplication with current object
+     * @return multiplication result
+     */
     public Matrix multiplyMatrices(Matrix factorMatrix) {
 
         int thisRows = this.getRowLength();
@@ -121,18 +138,11 @@ public class Matrix {
 
     }
 
-    public Matrix getSubmatrix(int n, int m) {
-
-        int[][] result = new int[n][m];
-
-        for (int i = 0; i < n; i++) {
-            System.arraycopy(this.getColumnByIndex(i), 0, result[i], 0, m);
-        }
-
-        return new Matrix(result);
-
-    }
-
+    /**
+     * Subtracts incoming matrix from current one
+     * @param second matrix to subtract
+     * @return result matrix
+     */
     public Matrix subtractMatrices(Matrix second) {
         int rowLength = this.array.length;
         int columnLength = this.array[0].length;
@@ -146,6 +156,11 @@ public class Matrix {
         return new Matrix(result);
     }
 
+    /**
+     * Compounds incoming matrix with current one
+     * @param second Matrix to compound
+     * @return result matrix
+     */
     public Matrix compoundMatrices(Matrix second) {
 
         int rowLength = this.getRowLength();
@@ -159,6 +174,22 @@ public class Matrix {
         }
         return new Matrix(result);
 
+    }
+
+    /**
+     * Returns submatrix in defined indices
+     * @param n row index
+     * @param m column index
+     * @return result matrix
+     */
+    public Matrix getSubmatrix(int n, int m) {
+        int[][] result = new int[n][m];
+
+        for (int i = 0; i < n; i++) {
+            System.arraycopy(this.array[i], 0, result[i], 0, m);
+        }
+
+        return new Matrix(result);
     }
 
     // Object methods

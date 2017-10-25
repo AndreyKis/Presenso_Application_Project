@@ -8,13 +8,10 @@ public interface MatrixMultiplier {
     /**
      * Multiplies two matrices different way
      *
-     * @param firstMatrix
-     * @param secondMatrix
-     * @return
+     * @param firstMatrix firstMatrix
+     * @param secondMatrix factorMatrix
+     * @return multiplication result
      */
     Matrix multiplyMatrices(Matrix firstMatrix, Matrix secondMatrix);
-    default Matrix multiplyMa2trices(Matrix firstMatrix, Matrix secondMatrix) {
-        return null;
-    }
 
 }

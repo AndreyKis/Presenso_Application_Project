@@ -7,8 +7,8 @@ public class ApplicationConstants {
     public static class LoggerTexts {
         private LoggerTexts() {  }
 
-        public static final String LINEAR_ELAPSED_TIME = "Linear elapsed time: ";
-        public static final String PARALLEL_ELAPSED_TIME = "Parallel elapsed time: ";
+        public static final String LINEAR_ELAPSED_TIME = "Linear elapsed time in seconds: ";
+        public static final String PARALLEL_ELAPSED_TIME = "Parallel elapsed time in seconds: ";
     }
 
     public static class ExceptionMessages {

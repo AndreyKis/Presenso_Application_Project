@@ -9,8 +9,10 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.RecursiveTask;
 
+/**
+ * @see <a href="https://en.wikipedia.org/wiki/Strassen_algorithm">Strassen algorithm</a>
+ */
 public class MatrixParallelMultiplier implements MatrixMultiplier {
-    long elapsedTime;
 
     @Override
     public Matrix multiplyMatrices(Matrix firstMatrix, Matrix secondMatrix) {
@@ -19,22 +21,13 @@ public class MatrixParallelMultiplier implements MatrixMultiplier {
         Matrix resizedFirstMatrix = MatrixHelper.resizeMatrixToSquareForm(firstMatrix, newDimension);
         Matrix resizedSecondMatrix = MatrixHelper.resizeMatrixToSquareForm(secondMatrix, newDimension);
 
-        long strassenBeginTime = System.nanoTime();
-
         StrassenAlgorithm task = new StrassenAlgorithm(resizedFirstMatrix, resizedSecondMatrix, newDimension);
         ForkJoinPool pool = new ForkJoinPool();
         Matrix strassenResult = pool.invoke(task);
 
-        long strassenEndTime = System.nanoTime();
-
-        this.elapsedTime = (strassenEndTime - strassenBeginTime) / 1000000000;
-
         return strassenResult.getSubmatrix(firstMatrix.getRowLength(), secondMatrix.getRowLength());
     }
 
-    /**
-     *
-     */
     private static class StrassenAlgorithm extends RecursiveTask<Matrix> {
 
         int dimension;
@@ -42,16 +35,13 @@ public class MatrixParallelMultiplier implements MatrixMultiplier {
         Matrix secondMatrix;
 
         StrassenAlgorithm(Matrix firstMatrix, Matrix secondMatrix, int dimension) {
-
             this.firstMatrix = firstMatrix;
             this.secondMatrix = secondMatrix;
             this.dimension = dimension;
-
         }
 
         @Override
         protected Matrix compute() {
-
             if (dimension <= 64) {
                 return firstMatrix.multiplyMatrices(secondMatrix);
             }
@@ -101,7 +91,6 @@ public class MatrixParallelMultiplier implements MatrixMultiplier {
             Matrix c22 = p1.subtractMatrices(p2).compoundMatrices(p3.compoundMatrices(p6));
 
             return MatrixHelper.collectMatrix(c11, c12, c21, c22);
-
         }
 
     }

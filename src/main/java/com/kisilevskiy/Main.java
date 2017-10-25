@@ -17,8 +17,6 @@ public class Main {
 
         MatrixMultiplier parallelMultiplier = new MatrixParallelMultiplier();
         Matrix parallelResult = parallelMultiplier.multiplyMatrices(firstMatrix, secondMatrix);
-
-        System.out.println();
     }
 
 }
